@@ -60,7 +60,7 @@ var AdminMain = React.createClass({
 
   approve: function() {
     return function() {
-      checkboxes = document.getElementsByName('checkbox');
+      let checkboxes = document.getElementsByName('checkbox');
       for (var i = 0, n = checkboxes.length; i < n; i++) {
         if (checkboxes[i].checked) {
           // approve it
@@ -80,7 +80,7 @@ var AdminMain = React.createClass({
 
   reject: function() {
     return function() {
-      checkboxes = document.getElementsByName('checkbox');
+      let checkboxes = document.getElementsByName('checkbox');
       for (var i = 0, n = checkboxes.length; i < n; i++) {
         if (checkboxes[i].checked) {
           // approve it
@@ -103,7 +103,7 @@ var AdminMain = React.createClass({
       if (!confirm('Are you sure? This is irreversible!')) {
         return;
       }
-      checkboxes = document.getElementsByName('checkbox');
+      let checkboxes = document.getElementsByName('checkbox');
       for (var i = 0, n = checkboxes.length; i < n; i++) {
         if (checkboxes[i].checked) {
           // approve it
@@ -121,7 +121,7 @@ var AdminMain = React.createClass({
   },
 
   selectAll: function(f, e) {
-    checkboxes = document.getElementsByName('checkbox');
+    let checkboxes = document.getElementsByName('checkbox');
     for (var i = 0, n = checkboxes.length; i < n; i++) {
       checkboxes[i].checked = f.target.checked;
     }
@@ -132,7 +132,7 @@ var AdminMain = React.createClass({
       $.ajax({
         type: 'GET',
         url: "/logout",
-        contentType: "application/json; charset=utf-8",
+        contentType: "application/json; charset=utf-8"
       });
     }.bind(this);
   },
