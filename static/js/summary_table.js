@@ -17,18 +17,11 @@ var SummaryMain = React.createClass({
         quotes: result
       });
       var renderedRows = [];
-      var padZeroes = function(input) {
-        // pad 1 digit to 2 digits
-        return ("0" + input).slice(-2);
-      };
       var resultArray = _.values(result);
       var sortedResults = _.sortBy(resultArray, function(row) {
         return -row['score'];
       });
       sortedResults.forEach(function(quote) {
-        var date = new Date(quote.date_created);
-        var formattedDate = date.getFullYear() + "-" + padZeroes(date.getMonth() + 1) + "-" + padZeroes(date.getDate()) +
-            " " + padZeroes(date.getHours()) + ":" + padZeroes(date.getMinutes()) + ":" + padZeroes(date.getSeconds());
         var quoteRow = (
 
             <tr>
@@ -51,16 +44,16 @@ var SummaryMain = React.createClass({
           <div className="site-wrapper-inner">
             <div className="cover-container">
               <div className="inner cover">
-                <h1>The Best Reasons to Work From Home</h1>
+                <h1>Лучшие отмазки для опозданий на работу</h1>
 
                 <form>
                   <div className="table-responsive">
                     <table className="table table-bordered" data-sortable>
                       <thead>
                       <tr className="table-header">
-                        <th>Quote Id</th>
-                        <th>Quote</th>
-                        <th>Score</th>
+                        <th>ID</th>
+                        <th>Отмазка</th>
+                        <th>Рейтинг</th>
                       </tr>
                       </thead>
                       <tbody>
@@ -70,7 +63,7 @@ var SummaryMain = React.createClass({
                   </div>
 
                   <div className="admin-buttons">
-                    Want to contribute to this? <a href="/">Vote now!</a>
+                    Хотите внести свой вклад? <a href="/">Проголосуйте!</a>
                   </div>
 
                 </form>

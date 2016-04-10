@@ -38,17 +38,14 @@ var AdminMain = React.createClass({
         var formattedDate = date.getFullYear() + "-" + padZeroes(date.getMonth() + 1) + "-" + padZeroes(date.getDate()) + " " + padZeroes(date.getHours()) + ":" + padZeroes(date.getMinutes()) + ":" + padZeroes(date.getSeconds());
         var quoteRow = (
 
-
             <tr>
-              <td className="checkbox-align"><input type="checkbox" name="checkbox" id={quote.id} value={quote.id}/>
-              </td>
+              <td className="checkbox-align"><input type="checkbox" name="checkbox" id={quote.id} value={quote.id}/></td>
               <td>{quote.id}</td>
               <td>{quote.text}</td>
-              <td>{quote.active ? "Active" : "Inactive"}</td>
+              <td>{quote.active ? "Активна" : "Неактивна"}</td>
               <td>{formattedDate}</td>
               <td data-value={parseInt(quote.score)}>{parseInt(quote.score)}</td>
             </tr>
-
 
         );
         renderedRows.push(quoteRow);
@@ -100,7 +97,7 @@ var AdminMain = React.createClass({
 
   delete: function() {
     return function() {
-      if (!confirm('Are you sure? This is irreversible!')) {
+      if (!confirm('Вы уверены? Это действие необратимо!')) {
         return;
       }
       let checkboxes = document.getElementsByName('checkbox');
@@ -154,11 +151,11 @@ var AdminMain = React.createClass({
                       <thead>
                       <tr className="table-header">
                         <th className="checkbox-align"><input type="checkbox" onClick={this.selectAll}/></th>
-                        <th>Quote Id</th>
-                        <th>Quote</th>
-                        <th>Status</th>
-                        <th>Date Created</th>
-                        <th>Score</th>
+                        <th>Id Отмазки</th>
+                        <th>Отмазка</th>
+                        <th>Статус</th>
+                        <th>Дата Создания</th>
+                        <th>Рейтинг</th>
                       </tr>
                       </thead>
                       <tbody>
@@ -169,12 +166,12 @@ var AdminMain = React.createClass({
 
                   <div className="admin-buttons">
                     <FormButton onClick={this.reject()}
-                                className="btn btn-warning btn-lg form-button">Reject</FormButton>
+                                className="btn btn-warning btn-lg form-button">Отклонить</FormButton>
                     <FormButton onClick={this.approve()}
-                                className="btn btn-success btn-lg form-button">Approve</FormButton>
+                                className="btn btn-success btn-lg form-button">Одобрить</FormButton>
                     <br />
                     <FormButton onClick={this.delete()}
-                                className="btn btn-danger btn-sm form-button">Delete</FormButton>
+                                className="btn btn-danger btn-sm form-button">Удалить</FormButton>
                   </div>
                 </form>
 

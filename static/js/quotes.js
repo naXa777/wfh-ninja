@@ -1,14 +1,3 @@
-var VoteButton = React.createClass({
-  render: function() {
-    return (
-        <a {...this.props}
-            href="javascript:;"
-            role="button"
-            className={(this.props.className || '') + ' btn'}/>
-    );
-  }
-});
-
 var Quotes = React.createClass({
   getInitialState: function() {
     return {
@@ -28,8 +17,8 @@ var Quotes = React.createClass({
 
     $.get("/quote", function(result) {
       if (this.isMounted()) {
-        var quoteIds = _.keys(result);
-        quoteIds = _.sample(quoteIds, quoteIds.length);
+        let quoteIds = _.keys(result);
+        quoteIds = _.sampleSize(quoteIds, quoteIds.length);
 
         var specificQuoteId = getParameterByName('quoteId');
         if (specificQuoteId != "") {
@@ -83,7 +72,7 @@ var Quotes = React.createClass({
 
   loadNextQuote: function(doNotPushState) {
     if (this.state.index >= (this.state.quotes.length - 1)) {
-      quoteIds = _.sample(this.state.quotes, this.state.quotes.length);
+      let quoteIds = _.sampleSize(this.state.quotes, this.state.quotes.length);
       this.setState({
         index: -1,
         quotes: quoteIds
@@ -123,7 +112,7 @@ var Quotes = React.createClass({
         url: "/quote/" + quoteId + '/vote',
         data: JSON.stringify({value: value}),
         contentType: "application/json; charset=utf-8",
-        success: function(result) {
+        success: function() {
           this.loadNextQuote();
         }.bind(this)
       });
@@ -135,19 +124,21 @@ var Quotes = React.createClass({
         <div className="site-wrapper-inner">
           <div className="cover-container">
             <div className="inner cover">
-              <p className="lead">I'm working from home today because...</p>
+              <p className="lead">Сегодня я опоздал(а) на работу в связи с тем, что...</p>
               <h1>{this.state.quoteText} <span className="badge">{this.state.quoteScore}</span></h1>
               <p className="lead">
-                <VoteButton onClick={this.vote(-1)} className="btn btn-lg btn-danger vote-button">This won't
-                  fly.</VoteButton>
-                <VoteButton onClick={this.vote(1)} className="btn btn-lg btn-success vote-button">Hell,
-                  Yeah!</VoteButton>
+                <button onClick={this.vote(-1)} className="btn btn-lg btn-danger vote-button">
+                  <span className="glyphicon glyphicon-thumbs-down" /> Не прокатит
+                </button>
+                <button onClick={this.vote(1)} className="btn btn-lg btn-success vote-button">
+                  <span className="glyphicon glyphicon-thumbs-up" /> Да, чёрт возьми!
+                </button>
               </p>
               <p className="twitter-wrapper" style={{height: '20px'}}>
-                <a href="https://twitter.com/share" data-text={"I'm working from home today because..."}
-                   className="twitter-share-button-template" data-via="christinang89" data-related="bencxr"
-                   data-count="none" data-hashtags="wfh">
-                  <div id="twitter-share-button-div"/>
+                <a href="https://twitter.com/share" data-text={"У меня сегодня выходной, потому что..."}
+                   className="twitter-share-button-template" data-via="naXa_by" data-related="bencxr"
+                   data-count="none" data-hashtags="выходной.by">
+                  <div id="twitter-share-button-div" />
                 </a>
               </p>
             </div>

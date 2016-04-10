@@ -50,11 +50,11 @@ var SubmitForm = React.createClass({
           <div className="cover-container submit-quote">
             <form onSubmit={this.submit} className="inner cover">
               <div className="form-group new-quote">
-                <label htmlFor="suggestedQuote" className="lead">I'm working from home because...</label>
+                <label htmlFor="suggestedQuote" className="lead">Сегодня я опоздал(а) на работу в связи с тем, что...</label>
                 <input type="text" className="form-control input-lg" onChange={this.handleChange}
-                       placeholder="Excuse goes here" value={this.state.quoteText}/>
+                       placeholder="Напиши свою отмазку" value={this.state.quoteText}/>
               </div>
-              <VoteButton onClick={this.submit} className="btn btn-lg btn-success">This is too good.</VoteButton>
+              <button onClick={this.submit} className="btn btn-lg btn-success">Всё так и было, ага</button>
             </form>
           </div>
         </div>
