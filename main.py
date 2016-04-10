@@ -82,7 +82,7 @@ def login():
 # renders admin page
 @app.route('/admin', methods=['GET'])
 def render_admin():
-    if current_user.is_authenticated is False:
+    if current_user.is_authenticated() is False:
         return redirect("/login", code=302)
     return app.send_static_file('admin.html')
 
@@ -104,7 +104,7 @@ def render_summary():
 @app.route("/quote", methods=['GET'])
 def get_quote():
     results = {}
-    if current_user.is_authenticated is True and request.args and request.args['all'] == "true":
+    if current_user.is_authenticated() is True and request.args and request.args['all'] == "true":
         result = Quote.query.all()
         for item in result:
             results[item.id] = item.serialize
