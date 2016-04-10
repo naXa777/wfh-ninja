@@ -1,10 +1,9 @@
 var FormButton = React.createClass({
   render: function() {
     return (
-        <a {...this.props}
-            href="javascript:;"
+        <button {...this.props}
             role="button"
-            className={(this.props.className || '') + ' btn'}/>
+            className={(this.props.className || '') + ' form-button'}/>
     );
   }
 });
@@ -80,7 +79,7 @@ var AdminMain = React.createClass({
       let checkboxes = document.getElementsByName('checkbox');
       for (var i = 0, n = checkboxes.length; i < n; i++) {
         if (checkboxes[i].checked) {
-          // approve it
+          // reject it
           $.ajax({
             type: 'PUT',
             url: "/quote/" + checkboxes[i].id + '/reject',
@@ -103,7 +102,7 @@ var AdminMain = React.createClass({
       let checkboxes = document.getElementsByName('checkbox');
       for (var i = 0, n = checkboxes.length; i < n; i++) {
         if (checkboxes[i].checked) {
-          // approve it
+          // delete it
           $.ajax({
             type: 'DELETE',
             url: "/quote/" + checkboxes[i].id,
@@ -165,13 +164,16 @@ var AdminMain = React.createClass({
                   </div>
 
                   <div className="admin-buttons">
-                    <FormButton onClick={this.reject()}
-                                className="btn btn-warning btn-lg form-button">Отклонить</FormButton>
-                    <FormButton onClick={this.approve()}
-                                className="btn btn-success btn-lg form-button">Одобрить</FormButton>
+                    <FormButton onClick={this.reject()} className="btn btn-warning btn-lg">
+                      <span className="glyphicon glyphicon-ban-circle" /> Отклонить
+                    </FormButton>
+                    <FormButton onClick={this.approve()} className="btn btn-success btn-lg">
+                      <span className="glyphicon glyphicon-ok-circle" /> Одобрить
+                    </FormButton>
                     <br />
-                    <FormButton onClick={this.delete()}
-                                className="btn btn-danger btn-sm form-button">Удалить</FormButton>
+                    <FormButton onClick={this.delete()} className="btn btn-danger btn-sm">
+                      <span className="glyphicon glyphicon-trash" /> Удалить
+                    </FormButton>
                   </div>
                 </form>
 

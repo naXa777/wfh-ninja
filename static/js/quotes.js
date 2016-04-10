@@ -1,3 +1,13 @@
+var VoteButton = React.createClass({
+  render: function() {
+    return (
+        <button {...this.props}
+            role="button"
+            className={(this.props.className || '') + ' vote-button'}/>
+    );
+  }
+});
+
 var Quotes = React.createClass({
   getInitialState: function() {
     return {
@@ -127,12 +137,12 @@ var Quotes = React.createClass({
               <p className="lead">Сегодня я опоздал(а) на работу в связи с тем, что...</p>
               <h1>{this.state.quoteText} <span className="badge">{this.state.quoteScore}</span></h1>
               <p className="lead">
-                <button onClick={this.vote(-1)} className="btn btn-lg btn-danger vote-button">
+                <VoteButton onClick={this.vote(-1)} className="btn btn-lg btn-danger">
                   <span className="glyphicon glyphicon-thumbs-down" /> Не прокатит
-                </button>
-                <button onClick={this.vote(1)} className="btn btn-lg btn-success vote-button">
+                </VoteButton>
+                <VoteButton onClick={this.vote(1)} className="btn btn-lg btn-success">
                   <span className="glyphicon glyphicon-thumbs-up" /> Да, чёрт возьми!
-                </button>
+                </VoteButton>
               </p>
               <p className="twitter-wrapper" style={{height: '20px'}}>
                 <a href="https://twitter.com/share" data-text={"У меня сегодня выходной, потому что..."}
