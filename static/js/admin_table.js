@@ -38,10 +38,13 @@ var AdminMain = React.createClass({
         var quoteRow = (
 
             <tr>
-              <td className="checkbox-align"><input type="checkbox" name="checkbox" id={quote.id} value={quote.id}/></td>
+              <td className="checkbox-align"><input type="checkbox" name="checkbox" id={"checkbox" + quote.id}
+                                                    value={quote.id} /></td>
               <td>{quote.id}</td>
               <td>{quote.text}</td>
-              <td>{quote.active ? "Активна" : "Неактивна"}</td>
+              <td>
+                <span className={"glyphicon glyphicon-eye-" + (quote.active? "open" : "close")} /> {quote.active ? "Активна" : "Неактивна"}
+              </td>
               <td>{formattedDate}</td>
               <td data-value={parseInt(quote.score)}>{parseInt(quote.score)}</td>
             </tr>
@@ -62,12 +65,10 @@ var AdminMain = React.createClass({
           // approve it
           $.ajax({
             type: 'PUT',
-            url: "/quote/" + checkboxes[i].id + '/approve',
-            contentType: "application/json; charset=utf-8",
-            async: false
+            url: "/quote/" + checkboxes[i].value + '/approve',
+            contentType: "application/json; charset=utf-8"
           });
           checkboxes[i].checked = false;
-
         }
       }
       this.loadQuotes();
@@ -82,11 +83,9 @@ var AdminMain = React.createClass({
           // reject it
           $.ajax({
             type: 'PUT',
-            url: "/quote/" + checkboxes[i].id + '/reject',
-            contentType: "application/json; charset=utf-8",
-            async: false
+            url: "/quote/" + checkboxes[i].value + '/reject',
+            contentType: "application/json; charset=utf-8"
           });
-
         }
         checkboxes[i].checked = false;
       }
@@ -105,7 +104,7 @@ var AdminMain = React.createClass({
           // delete it
           $.ajax({
             type: 'DELETE',
-            url: "/quote/" + checkboxes[i].id,
+            url: "/quote/" + checkboxes[i].value,
             contentType: "application/json; charset=utf-8",
             async: false
           });
@@ -116,7 +115,7 @@ var AdminMain = React.createClass({
     }.bind(this);
   },
 
-  selectAll: function(f, e) {
+  selectAll: function(f) {
     let checkboxes = document.getElementsByName('checkbox');
     for (var i = 0, n = checkboxes.length; i < n; i++) {
       checkboxes[i].checked = f.target.checked;
