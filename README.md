@@ -11,7 +11,7 @@ Live Demo: http://wfh.ninja/
 - Admin panel (/admin) for admin user registration, login, logout and approving/ rejecting of quotes
 
 ## Architecture
-WFH-ninja is built with a Python-Flask backend, with a React/ JS/ Bootstrap frontend. WFH-ninja uses a Postgresql database as the datastore.
+WFH-ninja is built with a Python-Flask backend, with a React/ JS/ Bootstrap frontend. JSX is precompiled to plain JavaScript via Babel. WFH-ninja uses a Postgresql database as the datastore.
 
 ## Requirements
 - Flask
@@ -26,23 +26,29 @@ WFH-ninja is built with a Python-Flask backend, with a React/ JS/ Bootstrap fron
   ```pip install flask-sqlalchemy```
 - Postgresql
   ```brew install postgresql```
+  or
+  ```apt-get install postgresql postgresql-server-*```
 - Psycopg2 (requires postgres)
   ```pip install psycopg2```
+- Babel
+  ```pip install babel-cli```
+  ```npm install babel-preset-es2015 babel-preset-react```
 
 ## To run
 1. Set up Database URL
   ```
   export DATABASE_URL=postgresql://USERNAME:PASSWORD@HOSTURL/DBNAME
   ```
-  
   Replace USERNAME, PASSWORD, HOSTURL, DBNAME with your credentials.
-
 2. Set up Database
   ```
   python initdb.py
   ```
-3. Run app
-
+3. Build app
+  ```
+  babel --presets es2015,react --watch static/js/ --out-dir static/app/
+  ```
+4. Run app
   ```
   python main.py
   ```
