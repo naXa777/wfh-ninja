@@ -66,4 +66,4 @@ var Main = React.createClass({
   }
 });
 
-React.render(<Main />, document.body);
+ReactDOM.render(<Main />, document.body);

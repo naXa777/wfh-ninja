@@ -187,4 +187,4 @@ var AdminMain = React.createClass({
   }
 });
 
-React.render(<AdminMain />, document.body);
+ReactDOM.render(<AdminMain />, document.body);

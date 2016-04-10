@@ -84,4 +84,4 @@ var SummaryMain = React.createClass({
   }
 });
 
-React.render(<SummaryMain />, document.body);
+ReactDOM.render(<SummaryMain />, document.body);
