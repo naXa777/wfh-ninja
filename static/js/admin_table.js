@@ -141,9 +141,9 @@ var AdminMain = React.createClass({
             <div className="cover-container">
               <div className="inner cover">
                 <div className="logout">
-                  <a href="/logout">Logout</a>
+                  <a href="/logout">Выход</a>
                 </div>
-                <h1>Admin Panel</h1>
+                <h1>Панель администратора</h1>
 
                 <form>
                   <div className="table-responsive">
@@ -151,7 +151,7 @@ var AdminMain = React.createClass({
                       <thead>
                       <tr className="table-header">
                         <th className="checkbox-align"><input type="checkbox" onClick={this.selectAll}/></th>
-                        <th>Id Отмазки</th>
+                        <th>ID</th>
                         <th>Отмазка</th>
                         <th>Статус</th>
                         <th>Дата Создания</th>
