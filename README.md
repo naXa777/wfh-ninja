@@ -2,7 +2,7 @@
 
 WFH-ninja was originally intended to be a "work from home" excuse generator, allowing the community to vote on the most effective excuses. Now it is a generator of excuses for coming late (in Russian). This repo is built as a generic single page app that displays one quote at a time, with features to "upvote" and "downvote" quotes. User submitted quotes require approval by a registered admin via an admin panel.
 
-Live Demo: http://wfh.ninja/
+Live Demo: http://wfh.ninja/  
 Russian Live Demo: http://vyhodnoi.by/
 
 ## Core features
@@ -12,50 +12,50 @@ Russian Live Demo: http://vyhodnoi.by/
 - Admin panel (/admin) for admin user registration, login, logout and approving/ rejecting of quotes
 
 ## Architecture
-WFH-ninja is built with a Python-Flask backend, with a React/ JS/ Bootstrap frontend. JSX is precompiled to plain JavaScript via Babel. WFH-ninja uses a Postgresql database as the datastore. Application is ready to deploy to OpenShift server.
+WFH-ninja is built with a Python-Flask backend, with a React/ JS/ Bootstrap frontend. JSX is precompiled to plain JavaScript via Babel. WFH-ninja uses a Postgresql database as the datastore. Application is ready for deployment to OpenShift server.
 
 ## Requirements
-- Flask
-  ```pip install flask```
-- SimpleJson
-  ```pip install simplejson```
-- Flask-CORS
-  ```pip install flask-cors```
-- Flask-login
-  ```pip install flask-login```
-- Flask-sqlachemy
-  ```pip install flask-sqlalchemy```
-- Postgresql
-  ```brew install postgresql```
-  or
-  ```apt-get install postgresql postgresql-server-*```
-- Psycopg2 (requires postgres)
-  ```pip install psycopg2```
-- Babel
-  ```pip install babel-cli```
-  ```npm install babel-preset-es2015 babel-preset-react```
+- Flask  
+  ```pip install flask```  
+- SimpleJson  
+  ```pip install simplejson```  
+- Flask-CORS  
+  ```pip install flask-cors```  
+- Flask-login  
+  ```pip install flask-login```  
+- Flask-sqlachemy  
+  ```pip install flask-sqlalchemy```  
+- Postgresql  
+  ```brew install postgresql```  
+  or  
+  ```apt-get install postgresql postgresql-server-*```  
+- Psycopg2 (requires postgres)  
+  ```pip install psycopg2```  
+- Babel  
+  ```pip install babel-cli```  
+  ```npm install babel-preset-es2015 babel-preset-react```  
 
-"Requirements file" contains a list of items to be installed using `pip`
+"Requirements file" contains a list of items to be installed using `pip`  
   ```pip install -r requirements.txt```
 
 ## To run
-1. Set up Database URL
+1. Set up Database URL  
   ```
   export OPENSHIFT_POSTGRESQL_DB_URL=postgresql://USERNAME:PASSWORD@HOSTURL/DBNAME
-  ```
-  Replace USERNAME, PASSWORD, HOSTURL, DBNAME with your credentials.
-2. Set up Database
+  ```  
+  Replace USERNAME, PASSWORD, HOSTURL, DBNAME with your credentials.  
+2. Set up Database  
   ```
   python initdb.py
-  ```
-3. Build app
+  ```  
+3. Build app  
   ```
   babel --presets es2015,react --watch static/js/ --out-dir static/app/
-  ```
-4. Run app
+  ```  
+4. Run app  
   ```
   python main.py
-  ```
+  ```  
 
 
 ## Documentation
@@ -144,6 +144,7 @@ Example:
 #### GET /quote/`quote_id`
 *Returns details of Quote of id `quote_id`*
 
+Only logged in user can see not approved quotes.  
 Result format:
 ```
 {
