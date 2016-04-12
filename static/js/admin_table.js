@@ -38,15 +38,16 @@ var AdminMain = React.createClass({
         var quoteRow = (
 
             <tr>
-              <td className="checkbox-align"><input type="checkbox" name="checkbox" id={"checkbox" + quote.id}
-                                                    value={quote.id} /></td>
-              <td>{quote.id}</td>
-              <td>{quote.text}</td>
-              <td>
+              <td className="checkbox-align" data-sortable="false">
+                <input type="checkbox" name="checkbox" id={"checkbox" + quote.id} value={quote.id} />
+              </td>
+              <td data-sortable-type="numeric">{parseInt(quote.id)}</td>
+              <td><a href={"/?quoteId=" + quote.id}> {quote.text}</a></td>
+              <td className="text-nowrap">
                 <span className={"glyphicon glyphicon-eye-" + (quote.active? "open" : "close")} /> {quote.active ? "Активна" : "Неактивна"}
               </td>
               <td>{formattedDate}</td>
-              <td data-value={parseInt(quote.score)}>{parseInt(quote.score)}</td>
+              <td data-sortable-type="numeric">{parseInt(quote.score)}</td>
             </tr>
 
         );
@@ -60,36 +61,44 @@ var AdminMain = React.createClass({
   approve: function() {
     return function() {
       let checkboxes = document.getElementsByName('checkbox');
+      let promises = [];
       for (var i = 0, n = checkboxes.length; i < n; i++) {
         if (checkboxes[i].checked) {
           // approve it
-          $.ajax({
+          var request = $.ajax({
             type: 'PUT',
             url: "/quote/" + checkboxes[i].value + '/approve',
             contentType: "application/json; charset=utf-8"
           });
+          promises.push(request);
           checkboxes[i].checked = false;
         }
       }
-      this.loadQuotes();
+      $.when.apply(null, promises).done(function () {
+        this.loadQuotes();
+      });
     }.bind(this);
   },
 
   reject: function() {
     return function() {
       let checkboxes = document.getElementsByName('checkbox');
+      let promises = [];
       for (var i = 0, n = checkboxes.length; i < n; i++) {
         if (checkboxes[i].checked) {
           // reject it
-          $.ajax({
+          var request = $.ajax({
             type: 'PUT',
             url: "/quote/" + checkboxes[i].value + '/reject',
             contentType: "application/json; charset=utf-8"
           });
         }
+        promises.push(request);
         checkboxes[i].checked = false;
       }
-      this.loadQuotes();
+      $.when.apply(null, promises).done(function () {
+        this.loadQuotes();
+      });
     }.bind(this);
   },
 
@@ -102,12 +111,13 @@ var AdminMain = React.createClass({
       for (var i = 0, n = checkboxes.length; i < n; i++) {
         if (checkboxes[i].checked) {
           // delete it
-          $.ajax({
+          var request = $.ajax({
             type: 'DELETE',
             url: "/quote/" + checkboxes[i].value,
             contentType: "application/json; charset=utf-8",
             async: false
           });
+          promises.push(request);
           checkboxes[i].checked = false;
         }
       }

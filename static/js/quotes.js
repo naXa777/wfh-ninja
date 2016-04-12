@@ -48,17 +48,15 @@ var Quotes = React.createClass({
     window.forceQuote = this.forceQuote;
   },
 
-  forceQuote: function(quoteId) {
-    $.get("/quote/" + quoteId, function(result) {
-      if (this.isMounted()) {
-        this.setState({
-          quoteText: result.text,
-          quoteScore: result.score,
-          index: this.state.quotes.length // force invalid index to restart it again
-        });
-        $('.vote-button').attr('disabled', false);
-      }
-    }.bind(this));
+  forceQuote: function(quoteText) {
+    if (this.isMounted()) {
+      this.setState({
+        quoteText: quoteText,
+        quoteScore: 1,
+        index: this.state.quotes.length // force invalid index to restart it again
+      });
+      $('.vote-button').attr('disabled', false);
+    }
   },
 
   updateTwitterButton: function() {

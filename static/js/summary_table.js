@@ -25,8 +25,7 @@ var SummaryMain = React.createClass({
         var quoteRow = (
 
             <tr>
-              <td>{quote.id}</td>
-              <td>{quote.text}</td>
+              <td><a href={"/?quoteId=" + quote.id}> {quote.text}</a></td>
               <td data-value={parseInt(quote.score)}>{parseInt(quote.score)}</td>
             </tr>
 
@@ -44,14 +43,13 @@ var SummaryMain = React.createClass({
           <div className="site-wrapper-inner">
             <div className="cover-container">
               <div className="inner cover">
-                <h1>Лучшие отмазки для опозданий на работу</h1>
+                <h1>Лучшие отмазки</h1>
 
                 <form>
                   <div className="table-responsive">
                     <table className="table table-bordered" data-sortable>
                       <thead>
                       <tr className="table-header">
-                        <th>ID</th>
                         <th>Отмазка</th>
                         <th>Рейтинг</th>
                       </tr>
@@ -63,7 +61,7 @@ var SummaryMain = React.createClass({
                   </div>
 
                   <div className="admin-buttons">
-                    Хотите внести свой вклад? <a href="/">Проголосуйте!</a>
+                    Хотите помочь сайту? <a href="/">Голосуйте</a> за хорошие отмазки!
                   </div>
 
                 </form>

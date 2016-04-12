@@ -1,5 +1,8 @@
+#!/usr/bin/env python
+
 from flask import *
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.login import UserMixin
 
 import simplejson as json
 import datetime
@@ -59,7 +62,7 @@ class Vote(db.Model):
                 "quote_id": self.quote_id}
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = "users"
     id = db.Column('user_id', db.Integer, primary_key=True)
     email = db.Column('email', db.String(50), unique=True, index=True)
@@ -70,18 +73,6 @@ class User(db.Model):
         self.password = password
         self.email = email
         self.date_created = datetime.datetime.utcnow()
-
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
-
-    def get_id(self):
-        return unicode(self.id)
 
     def __repr__(self):
         return '<User %r>' % (self.email)

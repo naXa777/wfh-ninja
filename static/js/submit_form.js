@@ -12,32 +12,32 @@ var SubmitButton = React.createClass({
 var SubmitForm = React.createClass({
   getInitialState: function() {
     return {
-      quoteText: ''
+      newQuoteText: ''
     };
   },
 
   handleChange: function(evt) {
     this.setState({
-      quoteText: evt.target.value
+      newQuoteText: evt.target.value
     });
   },
 
   submit: function(e) {
-    if (this.state.quoteText == "") {
+    if (this.state.newQuoteText == "") {
       return e.preventDefault();
     }
     $('button').prop('disabled', true);
     $.ajax({
       type: 'POST',
       url: "/quote",
-      data: JSON.stringify({text: this.state.quoteText}),
+      data: JSON.stringify({text: this.state.newQuoteText}),
       contentType: "application/json; charset=utf-8",
       success: function(result) {
         $('button').prop('disabled', false);
         this.setState({
-          quoteText: ""
+          newQuoteText: ""
         });
-        window.forceQuote(result.id);
+        window.forceQuote(result.text);
         window.scrollUp();
       }.bind(this)
     });
@@ -52,7 +52,7 @@ var SubmitForm = React.createClass({
               <div className="form-group new-quote">
                 <label htmlFor="suggestedQuote" className="lead">Сегодня я опоздал(а) на работу в связи с тем, что...</label>
                 <input type="text" className="form-control input-lg" onChange={this.handleChange}
-                       placeholder="Напиши свою отмазку" value={this.state.quoteText}/>
+                       placeholder="Напиши свою отмазку" value={this.state.newQuoteText}/>
               </div>
               <button onClick={this.submit} className="btn btn-lg btn-success">Всё так и было, ага</button>
             </form>

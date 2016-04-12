@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from flask import *
 from flask.ext.cors import CORS
 from flask.ext.login import LoginManager, login_user, logout_user, current_user, login_required
@@ -16,8 +18,8 @@ if app.config['SQLALCHEMY_DATABASE_URI'] is None:
 from models import db, Quote, Vote, User
 
 db.init_app(app)
-with app.app_context():
-    db.create_all()  # first-time init
+#with app.app_context():
+#    db.create_all()  # first-time init
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -81,10 +83,21 @@ def login():
 
 # renders admin page
 @app.route('/admin', methods=['GET'])
+@login_required
 def render_admin():
-    if current_user.is_authenticated() is False:
-        return redirect("/login", code=302)
     return app.send_static_file('admin.html')
+
+# protects admin page
+@app.route('/static/admin.html')
+@login_required
+def protected_admin():
+    return app.send_static_file('admin.html')
+
+
+@app.route('/static/app/admin_table.js')
+@login_required
+def protected_admin_table():
+    return app.send_static_file('app/admin_table.js')
 
 
 # user logout
@@ -104,7 +117,7 @@ def render_summary():
 @app.route("/quote", methods=['GET'])
 def get_quote():
     results = {}
-    if current_user.is_authenticated() is True and request.args and request.args['all'] == "true":
+    if current_user.is_authenticated is True and request.args and request.args['all'] == "true":
         result = Quote.query.all()
         for item in result:
             results[item.id] = item.serialize
@@ -126,6 +139,10 @@ def get_quote():
 @app.route("/quote/<int:id>", methods=['GET'])
 def get_single_quote(id):
     quote = Quote.query.get(id)
+    if quote is None:
+        return jsonify({"Error": "Quote not found"}), 404
+    if quote.active is False and current_user.is_authenticated is False:
+        return jsonify({"Error": "Quote is hidden"}), 403
     quote.view_count += 1
     quote_score = db.session.query(db.func.sum(Vote.value)).group_by(Vote.quote_id).filter(Vote.quote_id == id).all()
     db.session.commit()
@@ -209,5 +226,5 @@ def delete_quote(id):
 
 cors = CORS(app)
 if __name__ == "__main__":
-    app.debug = True  # uncomment to run debug mode
+    # app.debug = True  # uncomment to run debug mode
     app.run(host='0.0.0.0')
