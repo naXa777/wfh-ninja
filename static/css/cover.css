@@ -2,9 +2,8 @@
  * Globals
  */
 /* Font */
-@import url(http://fonts.googleapis.com/css?family=Open+Sans);
-@import url(http://fonts.googleapis.com/css?family=Bitter);
-@import url(http://fonts.googleapis.com/css?family=Lato);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans&subset=latin,cyrillic);
+@import url(http://fonts.googleapis.com/css?family=Rubik&subset=latin,cyrillic);
 
 /* Links */
 a,
@@ -31,7 +30,7 @@ html,
 body {
   height: 100%;
   background-color: #333;
-  font-family: 'Lato', 'Open Sans', 'Helvetica Neue', 'Helvetica', 'Arial', 'Serif', serif;
+  font-family: 'Open Sans', 'Helvetica Neue', 'Helvetica', 'Arial', 'Serif', serif;
 }
 
 body {
@@ -158,7 +157,8 @@ table > tr > td {
   margin-left: 20px;
 }
 
-.mastfoot-nav > li > a {
+.mastfoot-nav > li > a,
+.mastfoot-nav > li > p {
   padding-right: 0;
   padding-left: 0;
   font-size: 16px;
@@ -194,10 +194,6 @@ table > tr > td {
   .masthead-nav {
     float: right;
   }
-
-  .mastfoot-nav {
-    float: right;
-  }
 }
 
 /*
@@ -214,11 +210,18 @@ table > tr > td {
   margin: 15px;
 }
 
-h1 {
+h1, h3 {
   line-height: 1.5;
   max-width: 100vw;
+  font-family: 'Rubik', 'Open Sans', 'Helvetica Neue', 'Helvetica', 'Arial', 'Serif', serif;
+}
+
+h1 {
   word-wrap: break-word;
-  font-family: 'Rubik', 'Bitter', 'Open Sans', 'Helvetica Neue', 'Helvetica', 'Arial', 'Serif', serif;
+}
+
+h3.masthead-brand::first-letter {
+  color: #5cb85c;
 }
 
 .admin-buttons {
@@ -258,7 +261,6 @@ h1 {
   .masthead {
     position: fixed;
     top: 0;
-    right: 1.5vw;
   }
 
   .mastfoot {
@@ -286,7 +288,6 @@ h1 {
 }
 
 @media (min-width: 992px) {
-  .masthead,
   .cover-container {
     width: 80%;
   }
