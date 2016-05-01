@@ -74,9 +74,7 @@ var AdminMain = React.createClass({
           checkboxes[i].checked = false;
         }
       }
-      $.when.apply(null, promises).done(function () {
-        this.loadQuotes();
-      });
+      $.when.apply(null, promises).done(this.loadQuotes.bind(this));
     }.bind(this);
   },
 
@@ -96,9 +94,7 @@ var AdminMain = React.createClass({
         promises.push(request);
         checkboxes[i].checked = false;
       }
-      $.when.apply(null, promises).done(function () {
-        this.loadQuotes();
-      });
+      $.when.apply(null, promises).done(this.loadQuotes.bind(this));
     }.bind(this);
   },
 
