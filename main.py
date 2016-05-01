@@ -37,22 +37,6 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-# registers user
-@app.route('/register', methods=['POST'])
-def register():
-    body = request.get_json()
-    print app.config
-    if 'secret' not in body or body['secret'] != app.config['ADMIN_REGISTRATION_SECRET_KEY']:
-        return jsonify({"Error": "Secret key is wrong"})
-
-    email = body['email']
-    password = body['password']
-    user = User(email=email, password=password)
-    db.session.add(user)
-    db.session.commit()
-    return jsonify(user.serialize)
-
-
 # renders login page
 @app.route('/login', methods=['GET'])
 def render_login():
@@ -180,7 +164,14 @@ def post_new_vote(quote_id):
     body = request.get_json()
     ip = request.environ.get('HTTP_X_FORWARDED_FOR', request.remote_addr)
     ip = ip.partition(',')[0]
-    vote = Vote(ip=ip, value=body['value'], quote_id=quote_id)
+    sign = body['value'];
+    if (sign != 1 and sign != -1):
+        return jsonify({"Error": "Bad vote value"}), 422
+    quote = Quote.query.get(quote_id)
+    if quote is None:
+        return jsonify({"Error": "Quote not found"}), 404
+
+    vote = Vote(ip=ip, value=sign, quote_id=quote_id)
     db.session.add(vote)
     db.session.commit()
 
@@ -192,6 +183,9 @@ def post_new_vote(quote_id):
 @login_required
 def approve_quote(id):
     quote = Quote.query.get(id)
+    if quote is None:
+        return jsonify({"Error": "Quote not found"}), 404
+
     quote.active = True
     db.session.commit()
     return jsonify(quote.serialize)
@@ -202,6 +196,9 @@ def approve_quote(id):
 @login_required
 def reject_quote(id):
     quote = Quote.query.get(id)
+    if quote is None:
+        return jsonify({"Error": "Quote not found"}), 404
+
     quote.active = False
     db.session.commit()
     return jsonify(quote.serialize)
@@ -211,10 +208,11 @@ def reject_quote(id):
 @app.route("/quote/<int:id>", methods=['DELETE'])
 @login_required
 def delete_quote(id):
-    vote = Vote.query.filter_by(quote_id=id).all()
     quote = Quote.query.filter_by(id=id).all()
     if not quote:
-        return jsonify({"Error": "Quote does not exist"})
+        return jsonify({"Error": "Quote does not exist"}), 404
+    vote = Vote.query.filter_by(quote_id=id).all()
+
     for v in vote:
         db.session.delete(v)
     db.session.commit()
